@@ -6,17 +6,17 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.6.5'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.2.3'
+gem 'rails', '~> 5.2.4'
 # Use postgresql as the database for Active Record
 gem 'pg'
 # Use Puma as the app server
-gem 'puma', '~> 3.12'
+gem 'puma', '~> 3.12.2'
 
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'mini_racer', platforms: :ruby
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.5'
+gem 'jbuilder', '~> 2.9.1'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
@@ -30,6 +30,8 @@ gem 'omniauth-google-oauth2'
 
 gem 'jwt'
 gem 'premailer-rails'
+gem 'rswag-api'
+gem 'rswag-ui'
 
 group :development, :test do
   gem 'factory_bot_rails'
@@ -39,6 +41,7 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'dotenv-rails'
   gem 'rspec_junit_formatter', require: false
+  gem 'rswag-specs'
 end
 
 group :development do
@@ -54,11 +57,6 @@ end
 
 group :test do
   gem 'shoulda-matchers'
-  # Adds support for Capybara system testing and selenium driver
-  gem 'capybara', '>= 2.15'
-  gem 'selenium-webdriver'
-  # Easy installation and use of chromedriver to run system tests with Chrome
-  gem 'chromedriver-helper'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

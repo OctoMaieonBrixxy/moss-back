@@ -3,6 +3,7 @@
 class GoogleOauthCallbackController < ApplicationController
   def callback
     @response = request.env['omniauth.auth']
+    puts "access_token = Bearer #{token}" if Rails.env.development?
     redirect_to "#{ENV['FRONT_BASE_URL']}#access_token=#{token}"
   end
 

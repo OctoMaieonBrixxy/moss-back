@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe 'Questions', type: :request do
+describe 'Questions Requests', type: :request do
   let(:question) { create :question }
 
   describe 'GET /v1/questions' do
@@ -57,6 +57,11 @@ describe 'Questions', type: :request do
       }
     end
 
+    before do
+      allow(NotificationMailer).to receive(:with).and_return(NotificationMailer)
+      allow(NotificationMailer).to receive_message_chain(:new_question, :deliver_later)
+    end
+
     it 'returns a created HTTP status' do
       post '/api/v1/questions/', params: question_parameters, headers: headers_of_logged_in_user
 
@@ -90,9 +95,10 @@ describe 'Questions', type: :request do
     end
 
     it 'sends an email' do
-      expect do
-        post '/api/v1/questions/', params: question_parameters, headers: headers_of_logged_in_user
-      end.to change(ActionMailer::Base.deliveries, :count)
+      post '/api/v1/questions/', params: question_parameters, headers: headers_of_logged_in_user
+
+      expect(NotificationMailer).to have_received(:with).with(question: an_instance_of(Question))
+      expect(NotificationMailer.new_question).to have_received(:deliver_later)
     end
 
     it 'returns an error when title field is missing' do

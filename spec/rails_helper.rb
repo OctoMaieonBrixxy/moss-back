@@ -13,6 +13,8 @@ require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 
 require 'support/factory_bot'
+require 'support/current_user_spec_helper'
+
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end
@@ -64,6 +66,9 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+  config.include Request::CurrentUserSpecHelper, type: :model
+  config.include Request::CurrentUserSpecHelper, type: :request
 end
 
 Shoulda::Matchers.configure do |config|
@@ -71,18 +76,4 @@ Shoulda::Matchers.configure do |config|
     with.test_framework :rspec
     with.library :rails
   end
-end
-
-def current_user
-  {
-    'name' => 'Test User',
-    'email' => 'testuser@octo.com',
-    'exp' => 1_573_506_054,
-    'sub' => '208294780284604222681'
-  }
-end
-
-def headers_of_logged_in_user
-  allow(JWT).to receive(:decode).and_return([current_user])
-  { AUTHORIZATION: 'Bearer WhateverToken' }
 end

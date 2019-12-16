@@ -100,7 +100,7 @@ describe 'Votes Swagger', type: :request do
       consumes 'application/json'
       parameter name: :vote, in: :body, schema: create_votes_contract
 
-      before { create :vote, answer: answer, user_id: current_user_id }
+      before { create :vote, answer: answer, user_id: stubbed_user_id }
 
       response '200', 'Vote mis à jour' do
         let(:vote) { { answerId: answer.id } }

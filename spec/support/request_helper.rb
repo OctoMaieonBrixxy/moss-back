@@ -5,7 +5,7 @@ module Request
     include CurrentUserSpecHelper
 
     def access_token
-      JWT.encode(current_user, ENV['SECRET_KEY_BASE'], 'HS256')
+      JWT.encode(stubbed_user, ENV['SECRET_KEY_BASE'], 'HS256')
     end
   end
 end

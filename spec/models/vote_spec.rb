@@ -15,26 +15,26 @@ RSpec.describe Vote, type: :model do
       let(:first_answer) { create :answer, question: question }
 
       context 'current_user has already voted for this answer' do
-        let!(:previous_vote) { create :vote, user_id: current_user['id'], answer: first_answer }
+        let!(:previous_vote) { create :vote, user_id: stubbed_user['id'], answer: first_answer }
 
-        let(:new_vote) { build :vote, user_id: current_user['id'], answer: first_answer }
+        let(:new_vote) { build :vote, user_id: stubbed_user['id'], answer: first_answer }
 
         it { expect(new_vote.valid?).to be false }
       end
 
       context 'current_user has already voted for this question' do
         let(:second_answer) { create :answer, question: question }
-        let!(:previous_vote) { create :vote, user_id: current_user['id'], answer: first_answer }
+        let!(:previous_vote) { create :vote, user_id: stubbed_user['id'], answer: first_answer }
 
-        let(:new_vote) { build :vote, user_id: current_user['id'], answer: second_answer }
+        let(:new_vote) { build :vote, user_id: stubbed_user['id'], answer: second_answer }
 
         it { expect(new_vote.valid?).to be false }
       end
 
       context 'current_user has not already voted for this question' do
-        let!(:previous_vote) { create :vote, user_id: current_user['id'] }
+        let!(:previous_vote) { create :vote, user_id: stubbed_user['id'] }
 
-        let(:new_vote) { build :vote, user_id: current_user['id'], answer: first_answer }
+        let(:new_vote) { build :vote, user_id: stubbed_user['id'], answer: first_answer }
 
         it { expect(new_vote.valid?).to be true }
       end

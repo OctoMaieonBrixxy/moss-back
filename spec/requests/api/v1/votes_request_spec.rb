@@ -40,8 +40,8 @@ describe 'Votes Request', type: :request do
 
     it 'stores the relevant information' do
       expect(Vote.last.answer_id).to eq(answer.id)
-      expect(Vote.last.user_id).to eq(current_user['sub'])
-      expect(Vote.last.user_name).to eq(current_user['name'])
+      expect(Vote.last.user_id).to eq(stubbed_user['sub'])
+      expect(Vote.last.user_name).to eq(stubbed_user['name'])
     end
 
     it 'returns the ID of the created vote' do
@@ -56,7 +56,7 @@ describe 'Votes Request', type: :request do
 
     context 'Vote already exists' do
       let!(:second_answer) { create :answer, question: question }
-      let!(:vote) { create :vote, answer: first_answer, user_id: current_user['sub'], user_name: current_user['name'] }
+      let!(:vote) { create :vote, answer: first_answer, user_id: stubbed_user['sub'], user_name: stubbed_user['name'] }
 
       before do
         put "/api/v1/questions/#{question.id}/votes",
@@ -70,8 +70,8 @@ describe 'Votes Request', type: :request do
 
       it 'stores the relevant information' do
         expect(vote.reload.answer_id).to eq(second_answer.id)
-        expect(vote.reload.user_id).to eq(current_user['sub'])
-        expect(vote.reload.user_name).to eq(current_user['name'])
+        expect(vote.reload.user_id).to eq(stubbed_user['sub'])
+        expect(vote.reload.user_name).to eq(stubbed_user['name'])
       end
 
       it 'returns the representation of the updated vote' do
@@ -94,8 +94,8 @@ describe 'Votes Request', type: :request do
 
       it 'stores the relevant information' do
         expect(Vote.last.answer_id).to eq(first_answer.id)
-        expect(Vote.last.user_id).to eq(current_user['sub'])
-        expect(Vote.last.user_name).to eq(current_user['name'])
+        expect(Vote.last.user_id).to eq(stubbed_user['sub'])
+        expect(Vote.last.user_name).to eq(stubbed_user['name'])
       end
 
       it 'returns the ID of the created vote' do
